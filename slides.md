@@ -335,6 +335,202 @@ Collections module
 * defaultdict
 
 ///s
+
+## Flow Control Statements
+
+///s
+
+### IF
+
+```python
+if x > 0:
+    print("Positive number")
+elif x < 0:
+    print("Negative number")
+else:
+    print("Zero")
+```
+
+///v
+
+```python
+user = User()
+if user:
+    # Do things
+    pass
+```
+Same as:
+```python
+if bool(user):
+    # Do things
+    pass
+```
+
+///v
+
+```python
+class User(object):
+    def __bool__(self):
+        # Custom logic
+        return True
+```
+///s
+
+### FOR
+
+///v
+
+JavaScript
+```javascript
+let items = ["Foo", "Bar", "Baz"];
+for(let i=0; i < items.length; i++) {
+    console.log(items[i]);
+}
+```
+
+Python
+```python
+items = ["Foo", "Bar", "Baz"]
+
+for i in range(len(items)):
+    print(items[i])
+```
+
+* Please don't. <!-- .element: class="fragment" -->
+
+///v
+
+* Iterates over the items of any sequence, in the order that they appear in the sequence.
+
+```python
+items = ["Foo", "Bar", "Baz"]
+
+for item in items:
+    print(item)
+>>> Foo
+>>> Bar
+>>> Baz
+```
+
+///v
+
+If you really need an index
+```python
+items = ["Foo", "Bar", "Baz"]
+
+for i, item in enumerate(items):
+    print(i, item)
+>>> 0 Foo
+>>> 1 Bar
+>>> 2 Baz
+```
+
+///v
+
+* `continue` skips one iteration
+* `break` breaks the for loop
+
+///v
+
+Else, what?
+
+```python
+items = ["Foo", "Bar", "Baz"]
+
+for i, item in enumerate(items):
+    if item == "Baz":
+        break
+    print(i, item)
+else:
+    print("It didn't break")
+>>> 0 Foo
+>>> 1 Bar
+```
+
+///v
+
+```python
+items = ["Foo", "Bar", "Spam"]
+
+for i, item in enumerate(items):
+    if item == "Baz":
+        break
+    if item == "Bar":
+        pass  # I'll do this later
+    print(i, item)
+else:
+    print("It didn't break")
+>>> 0 Foo
+>>> 1 Bar
+>>> 2 Spam
+>>> It didn't break
+```
+* Else clause is triggered when `break`s are not
+
+
+///s
+
+### WHILE
+
+///v
+
+```python
+items = ["spam", "eggs", "foo"]
+while items:
+    print(items.pop())
+>>> spam
+>>> eggs
+>>> foo
+```
+
+///v
+
+* Else again
+
+```python
+items = ["spam", "eggs", "foo"]
+while items:
+    print(items.pop()) 
+else:
+    print("Didn't break")
+>>> foo
+>>> eggs
+>>> spam
+>>> Didn't break
+```
+
+///s
+
+## TRY EXCEPT
+
+///v
+
+```python
+try:
+    json.load('data.json')
+except ValueError:  # Exception type is optional
+    print('Invalid file format.')
+except Exception:
+    print("Didn't see this coming")
+else:
+    # This is ran only when exception isn't raised
+    print("No errors")
+finally:
+    pass # This is ran every time
+```
+///s
+
+
+## FUNCTIONS
+
+
+///v
+
+### Arguments
+
+* 
+
+///s
 # Sources
 
 * [StackOverflow survey 2018](https://insights.stackoverflow.com/survey/2018/)
@@ -345,4 +541,10 @@ Collections module
 * [Python3 Standard Types](https://docs.python.org/3/library/stdtypes.html)
 * [Hashables in Python](https://docs.python.org/3/glossary.html#term-hashable)
 * [Collections Module](https://docs.python.org/3/library/collections.html#module-collections)
+
+///v
+
+* [Flow Control](https://docs.python.org/3/tutorial/controlflow.html)
+* [Iterable](https://docs.python.org/3/glossary.html#term-iterable)
+
 ///s
