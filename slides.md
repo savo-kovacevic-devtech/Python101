@@ -288,6 +288,10 @@ a = "Hi"
 b = 'Use double quotes "here"'
 multiline = '''Henlo
 It is me'''
+another_multiline = (
+    'This hase no whitespace '
+    'in between.'
+)
 ```
 
 * Immutable
