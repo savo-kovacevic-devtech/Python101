@@ -115,8 +115,9 @@ Splunk, Google, Facebook, Spotify, Reddit, Netflix, Quora, Instagram, NASA, Toyo
 
 # But Python is slow!
 
-* Benchmark performance vs real world performance <!-- .element: class="fragment" -->
+* Benchmark performance - real world performance <!-- .element: class="fragment" -->
 * Development time <!-- .element: class="fragment" -->
+* Still too slow? Maybe python is not suitable for your project. <!-- .element: class="fragment" -->
 
 ///s
 
@@ -289,7 +290,7 @@ b = 'Use double quotes "here"'
 multiline = '''Henlo
 It is me'''
 another_multiline = (
-    'This hase no whitespace '
+    'This has no whitespace '
     'in between.'
 )
 ```
@@ -505,7 +506,7 @@ else:
 
 ///s
 
-## TRY EXCEPT
+### TRY EXCEPT
 
 ///v
 
@@ -524,17 +525,432 @@ finally:
 ```
 ///s
 
+### SWITCH
 
-## FUNCTIONS
+* Nope. <!-- .element: class="fragment" -->
+
+///s
+
+
+### FUNCTIONS
 
 
 ///v
 
-### Arguments
+```python
+def add_numbers(a, b):
+    return a + b
 
-* 
+add_numbers(1, 4)
+>>> 5
+
+add_numbers
+>>> <function add_numbers at 0x7f6bfb2b1e18>
+```
+
+* If there is no return statement `None` is returned implicitly
+
+///v
+
+* First class citizens.
+
+```python
+def run_function(func, arg1, arg2): # There is a better way
+    return func(arg1, arg2)
+
+run_function(add_numbers, 1, 5)
+>>> 6
+```
+
+```python
+a = add_numbers
+a(1, 4)
+>>> 5
+```
+
+///v
+
+```python
+def increment(step):
+    def add_numbers(b):
+        return step + b
+    return add_numbers
+
+increment_by_five = increment(5)
+increment_by_five(5)
+>>> 10
+increment_by_five(100)
+>>> 105
+```
+
+///v
+
+#### Default arguments
+
+```python
+def increment(number, step=5):
+    return number + step
+
+increment(5)
+>>> 10
+increment(5, 1)
+>>> 6
+```
+
+* Use only immutable arguments for default parameters to avoid headache. <!-- .element: class="fragment" -->
+
+///v
+
+```python
+def add_to_list(item, l=[]):
+    l.append(item)
+    return l
+
+add_to_list(4)
+>>> [4]
+add_to_list(10)
+>>> [4, 10]
+```
+
+///v
+
+#### Positional and Keyword arguments
+
+```python
+def parrot(voltage, state='a stiff', action='voom'):
+    print("-- This parrot wouldn't", action, end=' ')
+    print("if you put", voltage, "volts through it.")
+    print("-- It's", state, "!")
+```
+
+* Valid calls
+
+```python
+parrot(1000)                                          # 1 positional argument
+parrot(voltage=1000)                                  # 1 keyword argument
+parrot(voltage=1000000, action='VOOOOOM')             # 2 keyword arguments
+parrot(action='VOOOOOM', voltage=1000000)             # 2 keyword arguments
+parrot('a million', 'bereft of life', 'jump')         # 3 positional arguments
+parrot('a thousand', state='pushing up the daisies')  # 1 positional, 1 keyword
+```
+
+///v
+
+```python
+def parrot(voltage, state='a stiff', action='voom'):
+    print("-- This parrot wouldn't", action, end=' ')
+    print("if you put", voltage, "volts through it.")
+    print("-- It's", state, "!")
+```
+
+* Invalid calls
+
+```python
+parrot()                     # required argument missing
+parrot(voltage=5.0, 'dead')  # non-keyword argument after a keyword argument
+parrot(110, voltage=220)     # duplicate value for the same argument
+parrot(actor='John Cleese')  # unknown keyword argument
+```
+
+///v
+
+#### `*` and `**`
+
+```python
+def my_func(*args, **kwargs): # `args` and `kwargs` is just a convention
+    print('Got args: ' + str(args))
+    print('Got keyword args: ' + str(kwargs))
+
+my_func(1, 'second_arg', first_kw=5, second_kw='Hello')
+>>> Got args: (1, 'second_arg')
+>>> Got keyword args: {'first_kw': 5, 'second_kw': 'Hello'}
+```
+
+```python
+def add_numbers(*numbers):
+    return sum(numbers)
+
+add_numbers(2, 3, 5)
+>>> 10
+```
+<!-- .element: class="fragment" -->
+
+///v
+
+#### Decorators
+
+```python
+@my_decorator
+def func(a, b):
+    pass
+
+# Equal to
+func = my_decorator(func)
+```
+
+///v
+
+#### Lambda
+
+* Inline functions
+* Syntactically restricted to a single expression
+
+```python
+def add_numbers(a, b):
+    return a + b
+
+add_numbers = lambda a, b: a + b
+
+filter(lambda a: a > 2, [1, 2, 3])
+>>> [3]
+```
 
 ///s
+
+## Classes
+
+///v
+
+```python
+class Dog(Animal):  # Subclasses Animal
+
+    kind = 'canine'         # class variable shared by all instances
+
+    def __init__(self, name): # Self (this) is written explicitly
+        self.name = name    # instance variable unique to each instance
+
+>>> fido = Dog('Fido')  # Ignore self when calling
+>>> buddy = Dog('Buddy')
+>>> fido.kind                  # shared by all dogs
+'canine'
+>>> buddy.kind                 # shared by all dogs
+'canine'
+>>> fido.name                  # unique to fido
+'Fido'
+>>> buddy.name                 # unique to buddy
+'Buddy'
+```
+
+///v
+
+#### Classmethod and staticmethod
+
+```python
+class Dog(Animal):
+    kind = 'canine'
+
+    @staticmethod
+    def random_colar_color():
+        return random.choice(['red', 'blue'])
+    
+    @classmethod
+    def get_kind(cls):  # gets class as first argument
+        return cls.kind
+```
+
+///s
+
+# Packaging
+
+///s
+
+## Packages and Modules
+
+///v
+
+Example structure:
+```
+http                 # package
+├── client           # package
+│   ├── __init__.py
+│   └── requests.py  # module
+├── __init__.py
+└── server           # package
+    ├── cookies.py   # module
+    └── handler.py   # module
+```
+
+///v
+
+### When imported:
+* Modules are ran from top to bottom. (only first time)
+* Created module object is stored in `sys.modules` mapping
+* Local variable is bound to represent that module object
+
+///v
+
+### Import statements
+
+```
+http
+├── client
+│   ├── __init__.py
+│   └── requests.py
+├── __init__.py
+└── server
+    ├── cookies.py
+    └── handler.py
+```
+
+```python
+import http                 # http imported and bound locally
+import http.client.requests # http.client.requests imported, http bound locally
+import http.client.requests as req # http.client.requests imported and bound as req
+from http.server import handler # http.server.handler imported and http.server.handler bound as handler
+
+from http.server.handler import BasicHandler # binding class from ...cookies module
+from http.client.cookies import parse_cookies # binding function from ...cookies module
+```
+
+///v
+
+### sys.modules
+
+```python
+import sys
+import http.client.requests as req
+
+sys.modules['http']
+>>> <module 'http' from 'http/__init__.py'>
+
+sys.modules['http.client']
+>>> <module 'http.client' from 'http/client/__init__.py'>
+
+sys.modules['http.client.requests']
+>>> <module 'http.client.requests' from 'http/client/requests.py'>
+
+http # NameError: name 'http' is not defined
+req
+>>> <module 'http.client.requests' from 'http/client/requests.py'>
+```
+///v
+
+### Import `*`
+
+```python
+from math import *
+```
+* Will introduce everything that doesn't start with `_` to namespace
+(or import everything that `__all__` specifies)
+* Will also make code unreadable  <!-- .element: class="fragment" -->
+
+```python
+from math import *
+abs(-2) + floor(2.3) # Where did this come from?
+
+import math
+math.abs(-2) + math.floor(2.3)
+```
+<!-- .element: class="fragment" -->
+
+///v
+
+#### `if __name__ == '__main__'`
+
+* Each module has a name attribute
+* `"__main__"` is the name of the scope in which top-level code executes
+
+///v
+
+Use this to your advantage
+```python
+# zipfile.py
+import sys
+
+def create_zip(directory, output_name):
+    # Creates zip from directory
+    pass
+
+if __name__ == '__main__':
+    create_zip(sys.argv[1], sys.argv[2])
+```
+
+```bash
+python zipfile.py my_dir/ output.zip  # __name__ in zipfile will be `__main__`
+```
+
+```python
+from zipfile import create_zip # create zip won't be ran, __name__ is `zipfile`
+create_zip('my_dir', 'output.zip')
+```
+
+///v
+
+### How python finds modules?
+
+///v
+
+#### Sys.path
+
+```python
+import sys
+sys.path
+>>> ['', 
+    '/usr/lib/python36.zip', 
+    '/usr/lib/python3.6', 
+    '/usr/lib/python3.6/lib-dynload',
+    '/usr/local/lib/python3.6/dist-packages',
+    '/usr/lib/python3/dist-packages']
+```
+
+* `sys.path` is assembled from `PYTHONPATH` and installation-dependent defaults
+* Python searches paths from left to right
+
+///v
+
+#### PYTHONPATH
+
+* `PYTHONPATH` allows you to extend default search path for module files
+* Can contain multiple paths separated with OS path separator <!-- .element: class="fragment" -->
+
+```bash
+export PYTHONPATH="/home/savo/Downloads:/home/savo/Documents"
+python3
+  ... import sys
+  ... sys.path
+  ... ['', '/home/savo/Downloads', '/home/savo/Documents', 
+  '/usr/lib/python36.zip', 
+  '/usr/lib/python3.6', '/usr/lib/python3.6/lib-dynload', 
+  '/usr/local/lib/python3.6/dist-packages', 
+  '/usr/lib/python3/dist-packages']
+```
+
+<!-- .element: class="fragment" -->
+
+///v
+
+
+* If python script is ran (`python myscript.py`), parent dir of the script
+is automatically added to the front of `sys.path` (even before `PYTHONPATH`s) 
+
+* If python is ran in interactive mode, empty string is appended which means that
+working directory should be searched first.  <!-- .element: class="fragment" -->
+
+* External modules are installed via `pip` which is preferred python package manager. 
+Installed packages are stored into `dist-packages` directory
+
+ <!-- .element: class="fragment" -->
+
+///s
+
+## CODING STYLE
+
+### PEP8 <!-- .element: class="fragment" -->
+
+///s
+
+## What we didn't cover?
+
+* (Most of) Decorators
+* Generators
+* `with` statement (context managers)
+* Relative imports (`from .bar import foo`)
+* Typing
+* Docstring
+* Virtualenv
+
+///s
+
 # Sources
 
 * [StackOverflow survey 2018](https://insights.stackoverflow.com/survey/2018/)
@@ -548,7 +964,21 @@ finally:
 
 ///v
 
+* [Built in functions](https://docs.python.org/3/library/functions.html)
 * [Flow Control](https://docs.python.org/3/tutorial/controlflow.html)
 * [Iterable](https://docs.python.org/3/glossary.html#term-iterable)
+* [Classes](https://docs.python.org/3/tutorial/classes.html)
+* [sys.path](https://docs.python.org/3/library/sys.html#sys.path)
+* [PYTHONPATH](https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH)
+* [PEP8](https://www.python.org/dev/peps/pep-0008/)
 
 ///s
+
+
+## Questions?
+
+
+///v
+
+
+## Thank you!
