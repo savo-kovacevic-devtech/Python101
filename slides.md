@@ -585,6 +585,98 @@ increment_by_five(100)
 
 ///v
 
+### Scopes
+
+* You can access any variable from outer scopes <!-- .element: class="fragment" -->
+* If you want to modify outer scope variable,  you are doing it wrong <!-- .element: class="fragment" -->
+
+///v
+
+### Accessing
+
+```python
+x = 5
+def func():
+    def another():
+        print(x)
+    another()
+func()
+>>> 5
+```
+
+
+
+```python
+x = 5
+def func():
+    x = 999
+    def another():
+        print(x)
+    another()
+func()
+>>> 999
+```
+
+<!-- .element: class="fragment" -->
+
+
+///v
+
+### Modifying
+
+global
+```python
+x = 5
+def func():
+    def another():
+        global x
+        x = 50
+    another()
+print(x)
+>>> 5
+func()
+print(x)
+>>> 50
+```
+
+```python
+globals()
+>>> {'__name__': '__main__', ... 
+'__builtins__': <module 'builtins' (built-in)>, 
+'x': 50, 'func': <function func at 0x7f8e4a91fb70>}
+```
+
+<!-- .element: class="fragment" -->
+
+///v
+
+nonlocal
+```python
+def func():
+    x = 42
+    def another():
+        nonlocal x
+        x = 43
+    print("Before calling `another`: " + str(x))
+    another()
+    print("After calling `another`: " + str(x))
+
+x = 3
+func()
+>>> Before calling another: 42
+>>> After calling another: 43
+print("x in main: " + str(x))
+>>> x in main: 3
+
+```
+
+///v
+
+* Don't use this unless you know what you are doing.
+* Probably a good indicator that your code is bad.
+
+///v
+
 #### Default arguments
 
 ```python
