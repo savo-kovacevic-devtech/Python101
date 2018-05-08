@@ -7,9 +7,9 @@ revealOptions:
     transition: 'slide'
 ---
 
-# Python 101
+# PYTHON 101
 
-![logo](img/python_logo.png)
+![logo](img/python_logo2.png) <!-- .element: style="width: 200px; height: 200px; border: none; background: none" -->
 
 ///s
 
@@ -90,9 +90,15 @@ JavaScript
 
 ## Rise of Python
 
-> Python has risen in the ranks, surpassing C# this year, much like it surpassed PHP last year. Python has a solid claim to being the fastest-growing major programming language.
+> Python has risen in the ranks, surpassing C# this year, much like it surpassed PHP last year.
 
 [Stack Overflow Survey 2018](https://insights.stackoverflow.com/survey/2018/#most-loved-dreaded-and-wanted)
+
+///v
+
+> Python has a solid claim to being the fastest-growing major programming language.
+
+[Incredible growth of Python - SO Blog](https://stackoverflow.blog/2017/09/06/incredible-growth-python/)
 
 ///s
 
@@ -400,6 +406,8 @@ items = ["Foo", "Bar", "Baz"]
 for i in range(len(items)):
     print(items[i])
 ```
+
+<!-- .element: class="fragment" -->
 
 * Please don't. <!-- .element: class="fragment" -->
 
@@ -1046,16 +1054,17 @@ Installed packages are stored into `dist-packages` directory
 # Sources
 
 * [StackOverflow survey 2018](https://insights.stackoverflow.com/survey/2018/)
+* [Incredible growth of Python - SO Blog](https://stackoverflow.blog/2017/09/06/incredible-growth-python/)
 * [Number of instagram users](https://www.statista.com/statistics/253577/number-of-monthly-active-instagram-users/)
 * [Instagram at PyCon](https://www.youtube.com/watch?v=66XoCk79kjM)
 * [CPython on Github](https://github.com/python/cpython)
 * [Python 2.7 EOL countdown](https://pythonclock.org/)
 * [Python3 Standard Types](https://docs.python.org/3/library/stdtypes.html)
 * [Hashables in Python](https://docs.python.org/3/glossary.html#term-hashable)
-* [Collections Module](https://docs.python.org/3/library/collections.html#module-collections)
 
 ///v
 
+* [Collections Module](https://docs.python.org/3/library/collections.html#module-collections)
 * [Built in functions](https://docs.python.org/3/library/functions.html)
 * [Flow Control](https://docs.python.org/3/tutorial/controlflow.html)
 * [Iterable](https://docs.python.org/3/glossary.html#term-iterable)
