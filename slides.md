@@ -399,7 +399,7 @@ for(let i=0; i < items.length; i++) {
 }
 ```
 
-Python
+Python <!-- .element: class="fragment" -->
 ```python
 items = ["Foo", "Bar", "Baz"]
 
@@ -1023,7 +1023,7 @@ python3
 * If python script is ran (`python myscript.py`), parent dir of the script
 is automatically added to the front of `sys.path` (even before `PYTHONPATH`s) 
 
-* If python is ran in interactive mode, empty string is appended which means that
+* If python is ran in interactive mode, empty string is prepended which means that
 working directory should be searched first.  <!-- .element: class="fragment" -->
 
 * External modules are installed via `pip` which is preferred python package manager. 
@@ -1072,6 +1072,10 @@ Installed packages are stored into `dist-packages` directory
 * [sys.path](https://docs.python.org/3/library/sys.html#sys.path)
 * [PYTHONPATH](https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH)
 * [PEP8](https://www.python.org/dev/peps/pep-0008/)
+
+///v
+
+* [Whats new in Python3](https://docs.python.org/3.0/whatsnew/3.0.html)
 
 ///s
 
